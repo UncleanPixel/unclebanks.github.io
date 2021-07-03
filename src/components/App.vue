@@ -5,7 +5,6 @@
     <Inventory />
     <EnemyBox />
     <PlayerBox />
-    <NavBox />
     <PartyBox
       :ui="ui"
       :player="player"
@@ -17,13 +16,12 @@
 
 <script>
 
-import PokemonList from './PokemonList/PokemonList.vue';
 import RoutesBox from './RoutesBox.vue';
 import Inventory from './Inventory.vue';
 import EnemyBox from './EnemyBox.vue';
 import PlayerBox from './PlayerBox.vue';
-import NavBox from './NavBox.vue';
 import PartyBox from './PartyBox.vue';
+import PokemonList from './PokemonList/PokemonList.vue';
 import Modals from './Modals.vue';
 
 // Fake userInteractions object that does nothing
@@ -32,12 +30,11 @@ import { dummy } from '../modules/actions';
 
 export default {
     components: {
-        PokemonList,
         RoutesBox,
         Inventory,
         EnemyBox,
         PlayerBox,
-        NavBox,
+        PokemonList,
         PartyBox,
         Modals,
     },

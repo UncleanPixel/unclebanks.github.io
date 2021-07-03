@@ -21,7 +21,6 @@
         max="100"
       />
       <br>
-      <span class="status" />
     </div>
   </div>
 </template>

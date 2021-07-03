@@ -8,10 +8,68 @@ html, body {
     font-family: 'Lato', sans-serif;
     color: rgb(255, 255, 255);
     display: grid;
-    grid-template-columns: minmax(210px, 18%) 30% 30% 22%;
-    grid-template-rows: 45% 25% 30%;
+    grid-template-columns: 30vw 70vw;
+    grid-template-rows: 50vh 50vh;
     background-color: rgb(58, 58, 58);
 }
+#menu {
+    max-height: 100vh;
+    width: 200px;
+    position: fixed;
+    z-index: 20000;
+    top: 0;
+    right: -250px;
+    overflow-x: hidden;
+    padding-top: 40px;
+    padding-bottom: 30px;
+    transition: 0.5s;
+    background: inherit;
+    background-color: rgb(58, 58, 58);
+    border-radius: 0 0 20px 0;
+
+    a {
+      text-decoration: none;
+    }
+
+    span {
+        font-size: xx-large;
+        text-align: justify;
+    }
+
+    #closeMenu {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+      color: white;
+    }
+  }
+
+  #openMenu {
+    text-decoration: none;
+    height: 40px;
+    width: 40px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10000;
+    background-color: inherit;
+    color: white;
+    font-size: 28px;
+    text-align: center;
+  }
+
+  @media screen and (max-height: 450px) {
+    #menu {
+      padding-top: 15px;
+    }
+
+    #menu a {
+      font-size: 18px;
+    }
+  }
+
 
 .subtitle {
     color: white;
@@ -34,18 +92,10 @@ ul {
     padding-left: 0;
 }
 
-#listBox {
-    grid-column: 1;
-    grid-row: 1 / 3;
-    max-height: 600px;
-    overflow: auto;
-    float: left;
-    text-align: left;
-}
-
 #partyBox {
-    grid-column: 1 / 3;
-    grid-row: 3;
+    grid-column: 2/3;
+    grid-row: 2;
+    width: 50%;
     overflow: auto;
     float: left;
     text-align: left;
@@ -54,10 +104,20 @@ ul {
         display: inline-block;
     }
 }
+#listBox {
+    grid-column: 2;
+    grid-row: 2;
+    max-height: 600px;
+    overflow: auto;
+    width: 50%;
+    margin-left: 50%;
+    float: left;
+    text-align: left;
+}
 
 #routesBox {
-    grid-column: 4;
-    grid-row: 1 / 4;
+    grid-column: 1;
+    grid-row: 1;
     max-height: 750px;
     overflow: auto;
     float: left;
@@ -68,11 +128,6 @@ ul {
     margin-left: 3px;
     height: 16px;
     width: auto;
-}
-
-#listBox ul {
-    padding-left: 15px;
-    font-size: larger;
 }
 
 #pokedexBox select {
@@ -134,22 +189,9 @@ ul {
     color: $inactive-shiny;
 }
 
-
-#viewSelectBox {
-    grid-column: 2;
-    grid-row: 2;
-    width: 50%;
-    text-align: center;
-}
-
-#viewSelectBox p {
-    margin: 0;
-}
-
 #invBox {
-    grid-column: 3;
-    grid-row-start: 2;
-    grid-row-end: 4;
+    grid-column: 1;
+    grid-row: 2;
     padding: 5px;
     font-size: medium;
 }
@@ -163,26 +205,20 @@ ul {
 }
 
 #enemyBox {
-    grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column: 2;
+    grid-row: 1;
     width: 50%;
     margin-left: 50%;
     float: right;
-    grid-row: 1;
 }
 
 #playerBox {
-    grid-column: 2 / 4;
+    grid-column: 2;
     grid-row: 1;
     width: 50%;
     align-content: center;
 }
 #townBox {
-    text-align: center;
-}
-#navBox {
-    grid-column: 2;
-    grid-row: 2;
     text-align: center;
 }
 #prizeCorner {

@@ -26,7 +26,7 @@
       style="display:none;"
     >
       <button
-        onclick="userInteractions.viewTown()"
+        onclick="userInteractions.renderTown()"
         class="button"
       >
         TOWN
@@ -37,6 +37,33 @@
         class="button"
       >
         PROFESSOR BATTLE
+      </button>
+    </div>
+    <a
+      id="openMenu"
+      onclick="userInteractions.openMenu()"
+    >☰</a>
+    <div
+      id="menu"
+      class="px-2"
+    >
+      <a
+        id="closeMenu"
+        onclick="userInteractions.closeMenu()"
+      >&times;</a>
+      <span>Menu</span><br>
+      <hr>
+      <button
+        class="button"
+        onclick="userInteractions.viewPokeDex()"
+      >
+        Pokedex
+      </button>
+      <button
+        class="button"
+        onclick="userInteractions.viewSettings()"
+      >
+        Settings
       </button>
     </div>
   </div>

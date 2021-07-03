@@ -14,7 +14,7 @@
       :class="classes(poke, player)"
       :status="pokeStatus(poke)"
       @click="ui.changePokemon(index)"
-    >{{ poke.pokeName() }} ({{ poke.level() + (poke.prestigeLevel ? (`p${poke.prestigeLevel}`) : '') }})</a>
+    >({{ poke.level() + (poke.prestigeLevel ? (`p${poke.prestigeLevel}`) : '') }})</a>
     <br>
     <button
       class="pokeEvolveButton"
@@ -51,12 +51,6 @@
       @click="ui.moveToStorage(index)"
     >
       PC
-    </button>
-    <button
-      class="toStorageButton"
-      @click="ui.moveToPokeFarm(index)"
-    >
-      PokeFarm
     </button>
   </li>
 </template>

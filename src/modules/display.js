@@ -49,20 +49,12 @@ export default (player, combatLoop, userInteractions) => {
             if (id == 'enemy') townBox.style.display = 'none';
 
             face = face || 'front';
-            const pokeStatusAsText = (poke) => {
-                let output = '';
-                output += `Attack Speed: ${poke.attackSpeed() / 1000}<br>`;
-                output += `\nAttack: ${poke.avgAttack()}<br>`;
-                output += `\nDefense: ${poke.avgDefense()}<br>`;
-                return output;
-            };
             const domElements = {
                 name: container.querySelector('.name'),
                 img: container.querySelector('.img'),
                 hp: container.querySelector('.hp'),
                 hpBar: container.querySelector('.hpBar'),
                 expBar: container.querySelector('.expBar'),
-                status: container.querySelector('.status'),
             };
             this.setValue(domElements.name, `${poke.pokeName()} (L${poke.level()}, P${poke.prestigeLevel})`);
             this.setProp(domElements.img, 'src', poke.image()[face]);
@@ -73,7 +65,6 @@ export default (player, combatLoop, userInteractions) => {
                 this.setProp(domElements.expBar, 'value', Math.floor(poke.currentExp() - poke.thisLevelExp()));
                 this.setProp(domElements.expBar, 'max', poke.nextLevelExp() - poke.thisLevelExp());
             }
-            this.setValue(domElements.status, pokeStatusAsText(poke));
         },
         renderHeal: function (timeToHeal, enemy) {
             if (timeToHeal <= 0) {
@@ -100,6 +91,13 @@ export default (player, combatLoop, userInteractions) => {
             }
             return 'dead';
         },
+        renderRegionSelect: function () {
+            for (const region in ROUTES) {
+                if (player.regionUnlocked(region)) {
+                    return true;
+                } return false;
+            }
+        },
         renderPokeSort: function () {
             $('#autoSort').checked = player.settings.autoSort;
             if (player.settings.autoSort) {
@@ -110,19 +108,11 @@ export default (player, combatLoop, userInteractions) => {
                 $('#pokeSortDirSelect').style.display = 'none';
             }
         },
-        renderRegionSelect: function () {
-            for (const region in ROUTES) {
-                if (player.regionUnlocked(region)) {
-                    return true;
-                } return false;
-            }
-        },
         renderRouteList: function () {
             const requirementMet = requirementMetGenerator(player);
             this.renderRegionSelect();
             const routes = ROUTES[player.settings.currentRegionId];
             const listElement = $('#routeList');
-            $('#regionSelect').value = player.settings.currentRegionId;
             this.setValue(listElement, '');
             Object.keys(routes).forEach((routeId) => {
                 if (routeId !== '_unlock' && routeId !== '_global') {
@@ -239,7 +229,6 @@ export default (player, combatLoop, userInteractions) => {
             $('#autoSort').addEventListener('click', () => {
                 userInteractions.enablePokeListAutoSort();
             });
-
             $('#enableCatchAll').addEventListener('click',
                 () => {
                     let setCatchSetting;

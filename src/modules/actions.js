@@ -228,70 +228,6 @@ export default (player, combatLoop, enemy, town, story, appModel) => {
         moveToRoster: function (pokemonIndex) {
             appModel.$store.commit('pokemon/withdraw', pokemonIndex);
         },
-        moveToPokeFarm: function (pokemonIndex) {
-            if (!appModel.$store.state.pokemon.pokeFarm[1]) {
-                appModel.$store.commit('pokemon/depositPokeFarm', pokemonIndex);
-            } else { alert('You can only send two Pokemon to the PokeRanch right now.'); }
-        },
-        withdrawFromPokeFarm: function (pokemonIndex) {
-            appModel.$store.commit('pokemon/withdrawPokeFarm', pokemonIndex);
-        },
-        renderPokeRanchContainer: function () {
-            const poke1Box = $('#pokemon1Box').querySelector('.pokeBox');
-            const poke1Placement = appModel.$store.state.pokemon.pokeFarm[0];
-            const poke2Placement = appModel.$store.state.pokemon.pokeFarm[1];
-            const poke2Box = $('#pokemon2Box').querySelector('.pokeBox');
-            const pokeStatusAsText1 = (poke1Placement) => {
-                let output = '';
-                output += `Happiness: ${poke1Placement.happiness()}<br>`;
-                output += `\nAttack: ${poke1Placement.avgAttack()}<br>`;
-                output += `\nDefense: ${poke1Placement.avgDefense()}<br>`;
-                return output;
-            };
-            const pokeStatusAsText2 = (poke2Placement) => {
-                let output = '';
-                output += `Happiness: ${poke2Placement.happiness()}<br>`;
-                output += `\nAttack: ${poke2Placement.avgAttack()}<br>`;
-                output += `\nDefense: ${poke2Placement.avgDefense()}<br>`;
-                return output;
-            };
-            const pokemon1Stats = {
-                name: poke1Box.querySelector('.name'),
-                img: poke1Box.querySelector('.img'),
-                hp: poke1Box.querySelector('.hp'),
-                hpBar: poke1Box.querySelector('.hpBar'),
-                expBar: poke1Box.querySelector('.expBar'),
-                status: poke1Box.querySelector('.status'),
-            };
-            const pokemon2Stats = {
-                name: poke2Box.querySelector('.name'),
-                img: poke2Box.querySelector('.img'),
-                hp: poke2Box.querySelector('.hp'),
-                hpBar: poke2Box.querySelector('.hpBar'),
-                expBar: poke2Box.querySelector('.expBar'),
-                status: poke2Box.querySelector('.status'),
-            };
-            if (appModel.$store.state.pokemon.pokeFarm[0]) {
-                dom.setValue(pokemon1Stats.name, `${poke1Placement.pokeName()} (L${poke1Placement.level()}, P${poke1Placement.prestigeLevel})`);
-                dom.setProp(pokemon1Stats.img, 'src', `assets/sprites/normal/front/${poke1Placement.pokeName()}.png`);
-                dom.setValue(pokemon1Stats.hp, poke1Placement.lifeAsText());
-                dom.setProp(pokemon1Stats.hpBar, 'value', poke1Placement.getHp());
-                dom.setProp(pokemon1Stats.hpBar, 'max', poke1Placement.maxHp());
-                dom.setProp(pokemon1Stats.expBar, 'value', Math.floor(poke1Placement.currentExp() - poke1Placement.thisLevelExp()));
-                dom.setProp(pokemon1Stats.expBar, 'max', poke1Placement.nextLevelExp() - poke1Placement.thisLevelExp());
-                dom.setValue(pokemon1Stats.status, pokeStatusAsText1(poke1Placement));
-                if (appModel.$store.state.pokemon.pokeFarm[1]) {
-                    dom.setValue(pokemon2Stats.name, `${poke2Placement.pokeName()} (L${poke2Placement.level()}, P${poke2Placement.prestigeLevel})`);
-                    dom.setProp(pokemon2Stats.img, 'src', `assets/sprites/normal/front/${poke2Placement.pokeName()}.png`);
-                    dom.setValue(pokemon2Stats.hp, poke2Placement.lifeAsText());
-                    dom.setProp(pokemon2Stats.hpBar, 'value', poke2Placement.getHp());
-                    dom.setProp(pokemon2Stats.hpBar, 'max', poke2Placement.maxHp());
-                    dom.setProp(pokemon2Stats.expBar, 'value', Math.floor(poke2Placement.currentExp() - poke2Placement.thisLevelExp()));
-                    dom.setProp(pokemon2Stats.expBar, 'max', poke2Placement.nextLevelExp() - poke2Placement.thisLevelExp());
-                    dom.setValue(pokemon2Stats.status, pokeStatusAsText2(poke2Placement));
-                }
-            }
-        },
         openPokeDex: function () {
             openModal($('#pokedexModal'));
         },
@@ -657,7 +593,7 @@ export default (player, combatLoop, enemy, town, story, appModel) => {
         },
         viewTown: function () {
             const routeData = ROUTES[player.settings.currentRegionId][player.settings.currentRouteId].name;
-            if (routeData === 'Pallet Town' && !player.events.oakParcelReceived) {
+            if (routeData === 'Pallet Town') {
                 openModal(document.getElementById('pallettownModal'));
             } else if (routeData === 'Pallet Town') {
                 openModal(document.getElementById('pallettownnooakModal'));
@@ -684,6 +620,7 @@ export default (player, combatLoop, enemy, town, story, appModel) => {
             } else { alert('Not implemented yet'); }
         },
         renderTown: function () {
+            openModal(document.getElementById('townModal'));
             const pokeMart = $('#pokeMartButton');
             const npc = $('#npcButton');
             const prof = $('#profButton');
@@ -698,14 +635,23 @@ export default (player, combatLoop, enemy, town, story, appModel) => {
             prof.style.display = (route.prof) ? '' : 'none';
             prof.innerHTML = (route.prof) ? route.prof.name : '';
         },
+        openMenu: function () {
+            document.getElementById('menu').style.right = '0px';
+            document.getElementById('openMenu').style.display = 'none';
+            document.getElementById('closeMenu').style.display = 'block';
+        },
+        closeMenu: function () {
+            document.getElementById('menu').style.right = '-250px';
+            document.getElementById('closeMenu').style.display = 'none';
+            document.getElementById('openMenu').style.display = 'block';
+        },
         viewShop: function () {
             // closeModal(document.getElementById('townModal'));
             const region = player.settings.currentRegionId.toLowerCase();
-            const routeData = ROUTES[player.settings.currentRegionId][player.settings.currentRouteId].name;
             town.renderPokeCoinShop(region);
             town.renderBattleCoinShop(region);
             town.renderCatchCoinShop(region);
-            closeModal(document.getElementById(`${routeData.replace(/ /g, '').toLowerCase()}pokemartModal`));
+            closeModal(document.getElementById('townModal'));
             openModal(document.getElementById('shopModal'));
         },
         renderGym: function () {
@@ -953,13 +899,7 @@ export default (player, combatLoop, enemy, town, story, appModel) => {
             }
         },
         oakLab: function () {
-            if (player.events.oakParcelReceived === true) {
-                openModal(document.getElementById('oaklabModal'));
-                closeModal(document.getElementById('pallettownnooakModal'));
-            } else {
-                openModal(document.getElementById('oaklabnooakModal'));
-                closeModal(document.getElementById('pallettownModal'));
-            }
+            openModal(document.getElementById('oaklabModal'));
         },
         oakLabExit: function () {
             closeModal(document.getElementById('oaklabModal'));
@@ -1057,12 +997,12 @@ export default (player, combatLoop, enemy, town, story, appModel) => {
             } else { alert('Hiya! I work as an Aide. Be sure to talk to other NPCs as well. Some of us do stuff, others not so much.'); }
         },
         oakLabOak: function () {
-            if (player.events.oakParcelReceived && !player.events.oakParcelGiven) {
-                alert('This must be the parcel I ordered, thank you for delivering it.');
-                player.events.oakParcelGiven = true;
-            } else if (!player.events.oakParcelReceived) {
-                alert('I wonder where my parcel from Viridian City could be. . .');
-            } else { alert('There is more stuff to be implemented later on here.'); }
+            if (player.hasPokemon('Squirtle') && player.hasPokemon('Charmander') && player.hasPokemon('Bulbasaur')) {
+                alert('Great job on catching the Kanto region starters. Take this Pass to unlock deeper areas previously inaccessible.');
+                player.unlocked.kantoFirstStagePass = true;
+            } else if (!player.unlocked.kantoFirstStagePass) {
+                alert('It seems you need to research Pokemon a bit more thoroughly before I can grant you access to other areas.');
+            } else { alert('More to come, check back soon'); }
         },
         blueOakLab: function () {
             if (!player.events.oakParcelReceived) {

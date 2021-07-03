@@ -115,7 +115,7 @@ export default (lastSave, appModel) => {
         },
         settings: {
             currentRegionId: 'Kanto',
-            currentRouteId: 'kroute1',
+            currentRouteId: 'kViridianForest',
             listView: 'pokeDex',
             autoSort: true,
             dexView: 'all',
@@ -166,7 +166,7 @@ export default (lastSave, appModel) => {
         purgeData: false,
 
         checksum: function (s) {
-            let chk = 0x12345679;
+            let chk = 0x21345679;
             const len = s.length;
             for (let i = 0; i < len; i++) {
                 chk += (s.charCodeAt(i) * (i + 1));
@@ -335,60 +335,6 @@ export default (lastSave, appModel) => {
                 return false;
             }
             if (routeData.kantoSuperRod && !Player.unlocked.kantoSuperRod) {
-                return false;
-            }
-            if (routeData.johtoOldRod && !Player.unlocked.johtoOldRod) {
-                return false;
-            }
-            if (routeData.johtoGoodRod && !Player.unlocked.johtoGoodRod) {
-                return false;
-            }
-            if (routeData.johtoSuperRod && !Player.unlocked.johtoSuperRod) {
-                return false;
-            }
-            if (routeData.hoennOldRod && !Player.unlocked.hoennOldRod) {
-                return false;
-            }
-            if (routeData.hoennGoodRod && !Player.unlocked.hoennGoodRod) {
-                return false;
-            }
-            if (routeData.hoennSuperRod && !Player.unlocked.hoennSuperRod) {
-                return false;
-            }
-            if (routeData.sinnohOldRod && !Player.unlocked.sinnohOldRod) {
-                return false;
-            }
-            if (routeData.sinnohGoodRod && !Player.unlocked.sinnohGoodRod) {
-                return false;
-            }
-            if (routeData.sinnohSuperRod && !Player.unlocked.sinnohSuperRod) {
-                return false;
-            }
-            if (routeData.unovaOldRod && !Player.unlocked.unovaOldRod) {
-                return false;
-            }
-            if (routeData.unovaGoodRod && !Player.unlocked.unovaGoodRod) {
-                return false;
-            }
-            if (routeData.unovaSuperRod && !Player.unlocked.unovaSuperRod) {
-                return false;
-            }
-            if (routeData.kalosOldRod && !Player.unlocked.kalosOldRod) {
-                return false;
-            }
-            if (routeData.kalosGoodRod && !Player.unlocked.kalosGoodRod) {
-                return false;
-            }
-            if (routeData.kalosSuperRod && !Player.unlocked.kalosSuperRod) {
-                return false;
-            }
-            if (routeData.alolaOldRod && !Player.unlocked.alolaOldRod) {
-                return false;
-            }
-            if (routeData.alolaGoodRod && !Player.unlocked.alolaGoodRod) {
-                return false;
-            }
-            if (routeData.alolaSuperRod && !Player.unlocked.alolaSuperRod) {
                 return false;
             }
             if (routeData._unlock) {
